@@ -11,7 +11,12 @@ class NumbersAPIClient:
     params = {"json": True}
 
     def __init__(
-        self, fragment: bool = False, default: str = None, min: int = None, max: int = None
+        self,
+        fragment: bool = False,
+        default: str = None,
+        min: int = None,
+        max: int = None,
+        notfound: str = None,
     ) -> None:
         if fragment:
             self.params["fragment"] = True
@@ -28,6 +33,9 @@ class NumbersAPIClient:
             if not isinstance(max, int):
                 raise InvalidInput(f"max option should be int, got {type(max)}")
             self.params["max"] = max
+
+        if notfound:
+            self.params["notfound"] = notfound
 
     def __make_request(self, number: str, type: str) -> Dict[str, Any]:
         response = requests.get(f"{self.BASE_URL}/{number}/{type}", params=self.params)

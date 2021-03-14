@@ -39,6 +39,18 @@ def test_min_max_option():
     assert 10 <= response.number <= 20
 
 
+def test_notfound_floor_option():
+    client = NumbersAPIClient(notfound="floor")
+    response = client.trivia(-1000)
+    assert response.number == "-Infinity"
+
+
+def test_notfound_ceil_option():
+    client = NumbersAPIClient(notfound="ceil")
+    response = client.trivia(-1000)
+    assert response.number == "0"
+
+
 def test_invalid_number(client):
     with pytest.raises(InvalidInput):
         client.trivia("wrong input")
