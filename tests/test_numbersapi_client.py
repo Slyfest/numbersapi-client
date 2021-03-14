@@ -17,6 +17,11 @@ def test_trivia(client):
     assert response.number == number
 
 
+def test_math(client):
+    response = client.math()
+    assert response.type == "math"
+
+
 def test_number_response(client):
     response = client.trivia()
     assert isinstance(response, NumberResponse)

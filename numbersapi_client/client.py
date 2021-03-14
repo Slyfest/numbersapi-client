@@ -58,3 +58,12 @@ class NumbersAPIClient:
 
         result = self.__make_request(number, type=RequestType.TRIVIA)
         return NumberResponse(**result)
+
+    def math(self, number: int = None) -> NumberResponse:
+        if not number:
+            number = "random"
+        elif not isinstance(number, int):
+            raise InvalidInput(f"number should be int, got {type(number)}")
+
+        result = self.__make_request(number, type=RequestType.MATH)
+        return NumberResponse(**result)
