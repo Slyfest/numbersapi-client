@@ -1,3 +1,5 @@
+from re import L
+
 import pytest
 from numbersapi_client import __version__
 from numbersapi_client.client import NumbersAPIClient
@@ -59,6 +61,11 @@ def test_invalid_number(client):
 def test_invalid_min():
     with pytest.raises(InvalidOption):
         client = NumbersAPIClient(min="wrong input")
+
+
+def test_min_gt_max():
+    with pytest.raises(InvalidOption):
+        client = NumbersAPIClient(min=20, max=10)
 
 
 def test_invalid_notfound_option():

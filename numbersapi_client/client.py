@@ -1,3 +1,4 @@
+from ast import Num
 from typing import Any, Dict
 
 import requests
@@ -35,6 +36,9 @@ class NumbersAPIClient:
                 raise InvalidOption(f"max option should be int, got {type(max)}")
             self.params["max"] = max
 
+        if min and max and min > max:
+            raise InvalidOption(f"max option should be >= min option, got min={min} & max={max}")
+
         if notfound:
             try:
                 self.params["notfound"] = NotFoundOption(notfound).value
@@ -43,6 +47,7 @@ class NumbersAPIClient:
 
     def __make_request(self, number: str, type: str) -> Dict[str, Any]:
         response = requests.get(f"{self.BASE_URL}/{number}/{type}", params=self.params)
+        print(response.content)
         return response.json()
 
     def trivia(self, number: int = None) -> NumberResponse:
