@@ -12,3 +12,8 @@ class NumberResponse:
 @dataclass
 class YearResponse(NumberResponse):
     date: str = None
+
+
+@dataclass
+class DateResponse(NumberResponse):
+    year: str = None

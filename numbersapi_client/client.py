@@ -77,6 +77,17 @@ class NumbersAPIClient:
         result = self.__make_request(number, type=RequestType.YEAR)
         return YearResponse(**result)
 
+    def date(self, month: int = None, day: int = None) -> DateResponse:
+        if month is None and day is None:
+            number = "random"
+        elif not isinstance(month, int) or not isinstance(day, int):
+            raise InvalidInput(
+                f"month and day should be of types int/int, got {type(month)}/{type(day)}"
+            )
+        elif month not in range(1, 13) or day not in range(1, 32):
+            raise InvalidInput(f"{month}/{day} is not a proper date")
+        else:
+            number = f"{month}/{day}"
 
-client = NumbersAPIClient()
-print(client.year())
+        result = self.__make_request(number, type=RequestType.DATE)
+        return DateResponse(**result)

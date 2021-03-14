@@ -31,6 +31,12 @@ def test_year_response(client):
     assert hasattr(response, "date")
 
 
+def test_date_response(client):
+    response = client.date()
+    assert isinstance(response, DateResponse)
+    assert hasattr(response, "year")
+
+
 def test_fragment_option():
     client = NumbersAPIClient(fragment=True)
     response = client.trivia()
@@ -64,6 +70,11 @@ def test_notfound_ceil_option():
 def test_invalid_number(client):
     with pytest.raises(InvalidInput):
         client.trivia("wrong input")
+
+
+def test_invalid_date(client):
+    with pytest.raises(InvalidInput):
+        client.date(13, 45)
 
 
 def test_invalid_min():
