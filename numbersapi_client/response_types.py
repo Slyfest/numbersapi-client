@@ -7,3 +7,8 @@ class NumberResponse:
     number: int
     found: bool
     type: str
+
+
+@dataclass
+class YearResponse(NumberResponse):
+    date: str = None

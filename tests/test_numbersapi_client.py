@@ -1,9 +1,7 @@
-from re import L
-
 import pytest
 from numbersapi_client.client import NumbersAPIClient
 from numbersapi_client.exceptions import *
-from numbersapi_client.response_types import NumberResponse
+from numbersapi_client.response_types import *
 
 
 @pytest.fixture()
@@ -25,6 +23,12 @@ def test_math(client):
 def test_number_response(client):
     response = client.trivia()
     assert isinstance(response, NumberResponse)
+
+
+def test_year_response(client):
+    response = client.year()
+    assert isinstance(response, YearResponse)
+    assert hasattr(response, "date")
 
 
 def test_fragment_option():

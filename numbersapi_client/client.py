@@ -4,7 +4,7 @@ import requests
 
 from numbersapi_client.enums import *
 from numbersapi_client.exceptions import *
-from numbersapi_client.response_types import NumberResponse
+from numbersapi_client.response_types import *
 
 
 class NumbersAPIClient:
@@ -67,3 +67,16 @@ class NumbersAPIClient:
 
         result = self.__make_request(number, type=RequestType.MATH)
         return NumberResponse(**result)
+
+    def year(self, number: int = None) -> YearResponse:
+        if not number:
+            number = "random"
+        elif not isinstance(number, int):
+            raise InvalidInput(f"number should be int, got {type(number)}")
+
+        result = self.__make_request(number, type=RequestType.YEAR)
+        return YearResponse(**result)
+
+
+client = NumbersAPIClient()
+print(client.year())
