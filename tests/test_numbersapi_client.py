@@ -1,7 +1,7 @@
 import pytest
 from numbersapi_client import __version__
 from numbersapi_client.client import NumbersAPIClient
-from numbersapi_client.exceptions import InvalidInput
+from numbersapi_client.exceptions import *
 from numbersapi_client.response_types import NumberResponse
 
 
@@ -57,10 +57,10 @@ def test_invalid_number(client):
 
 
 def test_invalid_min():
-    with pytest.raises(InvalidInput):
+    with pytest.raises(InvalidOption):
         client = NumbersAPIClient(min="wrong input")
 
 
 def test_invalid_notfound_option():
-    with pytest.raises(InvalidInput):
+    with pytest.raises(InvalidOption):
         client = NumbersAPIClient(notfound="wrong input")
