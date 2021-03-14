@@ -4,3 +4,7 @@ class InvalidInput(Exception):
 
 class InvalidOption(Exception):
     pass
+
+
+class InvalidAPIResponse(Exception):
+    pass

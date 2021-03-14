@@ -47,7 +47,10 @@ class NumbersAPIClient:
     def __make_request(
         self, number: str, type: RequestType = RequestType.TRIVIA
     ) -> Dict[str, Any]:
-        response = requests.get(f"{self.BASE_URL}/{number}/{type.value}", params=self.params)
+        try:
+            response = requests.get(f"{self.BASE_URL}/{number}/{type.value}", params=self.params)
+        except Exception:
+            raise InvalidAPIResponse("API is not responding")
         return response.json()
 
     def trivia(self, number: int = None) -> NumberResponse:
