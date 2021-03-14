@@ -59,3 +59,8 @@ def test_invalid_number(client):
 def test_invalid_min():
     with pytest.raises(InvalidInput):
         client = NumbersAPIClient(min="wrong input")
+
+
+def test_invalid_notfound_option():
+    with pytest.raises(InvalidInput):
+        client = NumbersAPIClient(notfound="wrong input")

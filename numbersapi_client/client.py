@@ -2,6 +2,7 @@ from typing import Any, Dict
 
 import requests
 
+from numbersapi_client.enums import NotFoundOption
 from numbersapi_client.exceptions import InvalidInput
 from numbersapi_client.response_types import NumberResponse
 
@@ -16,7 +17,7 @@ class NumbersAPIClient:
         default: str = None,
         min: int = None,
         max: int = None,
-        notfound: str = None,
+        notfound: NotFoundOption = None,
     ) -> None:
         if fragment:
             self.params["fragment"] = True
@@ -35,7 +36,10 @@ class NumbersAPIClient:
             self.params["max"] = max
 
         if notfound:
-            self.params["notfound"] = notfound
+            try:
+                self.params["notfound"] = NotFoundOption(notfound).value
+            except ValueError:
+                raise InvalidInput(f"notfound option should be floor or ceil, got {notfound}")
 
     def __make_request(self, number: str, type: str) -> Dict[str, Any]:
         response = requests.get(f"{self.BASE_URL}/{number}/{type}", params=self.params)
