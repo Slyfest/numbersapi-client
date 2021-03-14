@@ -1,9 +1,8 @@
-from ast import Num
 from typing import Any, Dict
 
 import requests
 
-from numbersapi_client.enums import NotFoundOption
+from numbersapi_client.enums import *
 from numbersapi_client.exceptions import *
 from numbersapi_client.response_types import NumberResponse
 
@@ -45,9 +44,10 @@ class NumbersAPIClient:
             except ValueError:
                 raise InvalidOption(f"notfound option should be floor or ceil, got {notfound}")
 
-    def __make_request(self, number: str, type: str) -> Dict[str, Any]:
-        response = requests.get(f"{self.BASE_URL}/{number}/{type}", params=self.params)
-        print(response.content)
+    def __make_request(
+        self, number: str, type: RequestType = RequestType.TRIVIA
+    ) -> Dict[str, Any]:
+        response = requests.get(f"{self.BASE_URL}/{number}/{type.value}", params=self.params)
         return response.json()
 
     def trivia(self, number: int = None) -> NumberResponse:
@@ -56,5 +56,5 @@ class NumbersAPIClient:
         elif not isinstance(number, int):
             raise InvalidInput(f"number should be int, got {type(number)}")
 
-        result = self.__make_request(number, type="trivia")
+        result = self.__make_request(number, type=RequestType.TRIVIA)
         return NumberResponse(**result)

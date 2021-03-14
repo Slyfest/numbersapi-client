@@ -1,7 +1,6 @@
 from re import L
 
 import pytest
-from numbersapi_client import __version__
 from numbersapi_client.client import NumbersAPIClient
 from numbersapi_client.exceptions import *
 from numbersapi_client.response_types import NumberResponse
