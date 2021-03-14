@@ -21,13 +21,3 @@ class NumbersAPIClient:
             number = "random"
         result = self.__make_request(number, type="trivia")
         return NumberResponse(**result)
-
-
-test_num = 42
-numbersapi_client = NumbersAPIClient()
-
-result = numbersapi_client.trivia(test_num)
-print(result)
-
-result = numbersapi_client.trivia()
-print(result)
