@@ -10,16 +10,6 @@ def client():
     return NumbersAPIClient()
 
 
-@pytest.fixture()
-def client_fragment():
-    return NumbersAPIClient(fragment=True)
-
-
-@pytest.fixture()
-def client_default():
-    return NumbersAPIClient(default="This number is boring")
-
-
 def test_trivia(client):
     number = 42
     response = client.trivia(number)
@@ -31,14 +21,15 @@ def test_number_response(client):
     assert isinstance(response, NumberResponse)
 
 
-def test_fragment_option(client_fragment):
-    response = client_fragment.trivia()
-    text = response.text
-    assert isinstance(text[0], str)
+def test_fragment_option():
+    client = NumbersAPIClient(fragment=True)
+    response = client.trivia()
+    assert isinstance(response.text[0], str)
 
 
-def test_default_option(client_default):
-    response = client_default.trivia(-999)
+def test_default_option():
+    client = NumbersAPIClient(default="This number is boring")
+    response = client.trivia(-1000)
     assert response.text == "This number is boring"
 
 
